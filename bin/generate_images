@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require './config'
+require './jobs/process_psd_job.rb'
+
+Dir.glob(PSD_DIR+'/*.psd').each do |psd|
+  puts ProcessPSDJob.new.async.perform(File.basename(psd))
+end
