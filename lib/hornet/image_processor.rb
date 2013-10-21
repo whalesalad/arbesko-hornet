@@ -43,7 +43,7 @@ module Hornet
 
       # PDF Image
       convert :pdf, :png
-    ensure
+    
       cleanup
     end
 
@@ -98,9 +98,10 @@ module Hornet
     end
 
     def cleanup
-      File.delete(@cleaned)
-      Hornet.logger.info "Cleaned up after #{model_number}, removed #{@cleaned}."
-      true
+      if @cleaned
+        File.delete(@cleaned)
+        Hornet.logger.info "Cleaned up after #{model_number}, removed #{@cleaned}."
+      end
     end
 
   end
