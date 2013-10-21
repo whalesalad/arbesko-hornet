@@ -5,5 +5,6 @@ source 'https://rubygems.org'
 # gem 'activesupport', :require => "active_support"
 # gem 'thin'
 
+gem 'dante'
 gem 'subexec'
 gem 'listen'

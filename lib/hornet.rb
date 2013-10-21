@@ -5,6 +5,9 @@ require 'subexec'
 require 'listen'
 
 require 'hornet/version'
+require 'hornet/logging'
+require 'hornet/hive'
+require 'hornet/listener'
 require 'hornet/filesize'
 require 'hornet/image_processor'
 
@@ -28,14 +31,15 @@ module Hornet
   OUTPUT_DIR = File.join(BASE_DIR, 'public')
   # WATCH_DIR = ENV['HORNET_WATCH_DIR'] || ''
 
-  def self.process_directory(type, directory)
-    Dir.glob(directory + '/*.png').each do |file|
-      process_file(type, file)
-    end
+  # new Hornet::Hive(:single => PATH, :double => PATH).start
+  def self.start(options)
+    hive = Hornet::Hive.new(options)
+    hive.start
+    return hive
   end
 
-  def self.process_file(type, file)
-    # /Users/michael/Sites/arbesko/helpar_doublepair__tryck_print/
-    ImageProcessor.new(type, file).process!
+  def self.logger
+    Hornet::Logging.logger
   end
+
 end

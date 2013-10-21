@@ -4,7 +4,7 @@ module Hornet
     attr_reader :model_number, :file_size, :image_data
 
     def initialize(type, path)
-      @type = type
+      @type = type.to_s
       @file_path = path
     end
 
@@ -43,6 +43,8 @@ module Hornet
 
       # PDF Image
       convert :pdf, :png
+    ensure
+      cleanup
     end
 
     def path_for(location, extension)
@@ -93,6 +95,12 @@ module Hornet
         puts "  - Finished cleaning #{model_number}, saved clean PNG to #{output_path}."
         @cleaned = output_path
       end
+    end
+
+    def cleanup
+      File.delete(@cleaned)
+      puts "  - Cleaned up after #{model_number}, removed #{@cleaned}."
+      true
     end
 
   end
