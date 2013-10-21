@@ -1,21 +1,7 @@
 #!/usr/bin/env ruby
 
-# require 'optparse'
 require 'dante'
 require_relative '../lib/hornet.rb'
-
-# options = {}
-# OptionParser.new do |opts|
-#   opts.banner = "Usage: hornet [options]"
-
-#   opts.on("-s", "--single PATH", "Path to single-pair images.") do |s|
-#     options[:single] = s
-#   end
-
-#   opts.on("-d", "--double PATH", "Path to double-pair images.") do |d|
-#     options[:double] = d
-#   end
-# end.parse!
 
 runner = Dante::Runner.new('hornet')
 
