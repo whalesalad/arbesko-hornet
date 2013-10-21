@@ -17,7 +17,7 @@ module Hornet
         end
       end
 
-      @listener = Listen.to(@path &callback)
+      @listener = Listen.to(@path, &callback)
     end
 
     def start
