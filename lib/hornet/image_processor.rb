@@ -4,7 +4,7 @@ module Hornet
     attr_reader :model_number, :file_size, :image_data
 
     def initialize(type, path)
-      @type = type.to_s
+      @type = type
       @file_path = path
     end
 

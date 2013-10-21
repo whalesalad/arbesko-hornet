@@ -29,9 +29,7 @@ module Hornet
   BASE_DIR = File.expand_path(File.join(File.dirname(__FILE__), '../'))
   TMP_DIR = File.join(BASE_DIR, 'tmp')
   OUTPUT_DIR = File.join(BASE_DIR, 'public')
-  # WATCH_DIR = ENV['HORNET_WATCH_DIR'] || ''
 
-  # new Hornet::Hive(:single => PATH, :double => PATH).start
   def self.start(options)
     hive = Hornet::Hive.new(options)
     hive.start
