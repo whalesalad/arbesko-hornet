@@ -31,7 +31,7 @@ module Hornet
     end
 
     def process_file(file)
-      puts "Processing #{file} for #{@type}."
+      Hornet.logger.info "Processing #{file} for #{@type}."
       ImageProcessor.new(@type, file).process!
     end
 

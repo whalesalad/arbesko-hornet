@@ -27,9 +27,14 @@ runner.with_options do |opts|
   opts.on("-d", "--double PATH", "Path to double-pair images.") do |d|
     options[:double] = d
   end
+
+  opts.on("--force", "Force processing of all images on startup.") do |f|
+    options[:force] = f
+  end
 end
 
 runner.execute do |options|
-  Hornet.start(options)
+  hive = Hornet.start(options)
+  hive.force! if options[:force]
   sleep
 end

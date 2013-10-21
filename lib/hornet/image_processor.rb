@@ -22,7 +22,7 @@ module Hornet
     end
 
     def process!
-      puts "Starting on #{model_number} (#{type})..."
+      Hornet.logger.info "Starting on #{model_number} (#{type})..."
 
       clean! unless @cleaned
 
@@ -75,7 +75,7 @@ module Hornet
 
       command = Subexec.run "convert #{@cleaned} #{args.join(' ')} #{path_for(size, extension)}"
       if command.exitstatus == 0
-        puts "  - Finished #{slug.capitalize} #{extension.to_s.upcase} for #{model_number}."
+        Hornet.logger.info "Finished #{slug.capitalize} #{extension.to_s.upcase} for #{model_number}."
       end
     end
 
@@ -88,18 +88,18 @@ module Hornet
         @cleaned = output_path and return
       end
       
-      puts "  - Cleaning ..."
+      Hornet.logger.info "Cleaning ..."
 
       sub = Subexec.run "convert #{file_path} -fuzz 20% -gravity South -trim +repage #{output_path}"
       if sub.exitstatus == 0
-        puts "  - Finished cleaning #{model_number}, saved clean PNG to #{output_path}."
+        Hornet.logger.info "Finished cleaning #{model_number}, saved clean PNG to #{output_path}."
         @cleaned = output_path
       end
     end
 
     def cleanup
       File.delete(@cleaned)
-      puts "  - Cleaned up after #{model_number}, removed #{@cleaned}."
+      Hornet.logger.info "Cleaned up after #{model_number}, removed #{@cleaned}."
       true
     end
 
