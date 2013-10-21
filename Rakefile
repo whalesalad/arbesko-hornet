@@ -5,10 +5,8 @@ task :default => [:bootstrap]
 task :bootstrap do |t|
   puts "Bootstrapping needed directory structure..."
   
-  Hornet::ALLOWED_TYPES.each do |type|
-    Hornet::ALLOWED_SLUGS.each do |slug|
-      sh "mkdir -p #{File.join('public', type, slug)}"
-    end
+  Hornet::ALLOWED_SLUGS.each do |slug|
+    sh "mkdir -p #{File.join('public', slug)}"
   end
 
   sh "mkdir -p tmp"

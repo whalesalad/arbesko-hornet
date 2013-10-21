@@ -3,18 +3,15 @@ module Hornet
 
     def initialize(options)
       @options = options
-        
-      @listeners = options.select { |k,v| [:single, :double].include?(k) }.map do |type, path|
-        Listener.new(type, path)
-      end
+      @listener = Listener.new(options[:directory])
     end
 
     def start
-      @listeners.each { |l| l.start }
+      @listener.start
     end
 
     def force!
-      @listeners.each { |l| l.process_all }
+      @listener.process_all
     end
 
   end

@@ -6,12 +6,8 @@ require_relative '../lib/hornet.rb'
 runner = Dante::Runner.new('hornet')
 
 runner.with_options do |opts|
-  opts.on("-s", "--single PATH", "Path to single-pair images.") do |s|
-    options[:single] = s
-  end
-
-  opts.on("-d", "--double PATH", "Path to double-pair images.") do |d|
-    options[:double] = d
+  opts.on("-d", "--directory PATH", "Path to images.") do |d|
+    options[:directory] = d
   end
 
   opts.on("--force", "Force processing of all images on startup.") do |f|

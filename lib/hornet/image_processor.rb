@@ -1,11 +1,10 @@
 module Hornet
   class ImageProcessor
-    attr_accessor :file_path, :type
+    attr_accessor :file_path
     attr_reader :model_number, :file_size, :image_data
 
-    def initialize(type, path)
-      @type = type
-      @file_path = path
+    def initialize(file_path)
+      @file_path = file_path
     end
 
     def inspect
@@ -14,15 +13,15 @@ module Hornet
 
     def model_number
       filename = File.basename(file_path)
-      @model_number ||= filename.match(/[A-Z]+_(?<model_number>\d+)/)[:model_number].to_i
+      @model_number ||= filename.match(/[a-zA-Z]+_(?<model_number>\d+)/)[:model_number].to_i
     end
 
     def file_size
-      @file_size ||= Hornet::Filesize.new(@file_path).file_size
+      @file_size ||= Hornet::Filesize.new(file_path).file_size
     end
 
     def process!
-      Hornet.logger.info "Starting on #{model_number} (#{type})..."
+      Hornet.logger.info "Starting on #{model_number}..."
 
       clean! unless @cleaned
 
@@ -48,7 +47,7 @@ module Hornet
     end
 
     def path_for(location, extension)
-      File.join(OUTPUT_DIR, type, location.to_s, "#{model_number}.#{extension.to_s}")
+      File.join(OUTPUT_DIR, location.to_s, "#{model_number}.#{extension.to_s}")
     end
 
     def convert(size, extension)
@@ -82,7 +81,7 @@ module Hornet
   private
 
     def clean!
-      output_path = File.join(Hornet::TMP_DIR, "temp_#{type}_#{model_number}.png")
+      output_path = File.join(Hornet::TMP_DIR, "temp_#{model_number}.png")
 
       if File.file?(output_path)
         @cleaned = output_path and return
@@ -90,7 +89,7 @@ module Hornet
       
       Hornet.logger.info "Cleaning ..."
 
-      sub = Subexec.run "convert #{file_path} -fuzz 20% -gravity South -trim +repage #{output_path}"
+      sub = Subexec.run "convert #{file_path} -gravity South -trim +repage #{output_path}"
       if sub.exitstatus == 0
         Hornet.logger.info "Finished cleaning #{model_number}, saved clean PNG to #{output_path}."
         @cleaned = output_path

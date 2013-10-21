@@ -4,10 +4,9 @@
 
 module Hornet
   class Listener
-    attr_accessor :type, :path, :listener
+    attr_accessor :path, :listener
 
-    def initialize(type, path)
-      @type = type.to_s
+    def initialize(path)
       @path = path
 
       callback = Proc.new do |modified, added, removed|
@@ -31,8 +30,8 @@ module Hornet
     end
 
     def process_file(file)
-      Hornet.logger.info "Processing #{file} for #{type}."
-      ImageProcessor.new(@type, file).process!
+      Hornet.logger.info "Processing #{file}."
+      ImageProcessor.new(file).process!
     end
 
   end
