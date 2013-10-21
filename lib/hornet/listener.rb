@@ -17,7 +17,7 @@ module Hornet
         end
       end
 
-      @listener = Listen.to(@path, &callback)
+      @listener = Listen.to(@path &callback)
     end
 
     def start
@@ -26,12 +26,12 @@ module Hornet
 
     def process_all
       Dir.glob(@path + '/*.png').each do |file|
-        process_file(@type, file)
+        process_file(file)
       end
     end
 
     def process_file(file)
-      Hornet.logger.info "Processing #{file} for #{@type}."
+      Hornet.logger.info "Processing #{file} for #{type}."
       ImageProcessor.new(@type, file).process!
     end
 
