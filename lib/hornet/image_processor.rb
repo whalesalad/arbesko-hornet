@@ -41,7 +41,7 @@ module Hornet
       convert :mask, :png
 
       # PDF Image
-      convert :pdf, :png
+      # convert :pdf, :png
     
       cleanup
     end
@@ -52,24 +52,12 @@ module Hornet
 
     def convert(size, extension)
       slug = size.to_s
-      width = Hornet::IMAGE_SIZES[size]
+      max_dimension = Hornet::IMAGE_SIZES[size]
       
-      args = ["-resize #{width}"]
+      args = ["-resize #{max_dimension}x#{max_dimension}"]
       
-      if size == :mask
-        args << "-alpha extract"
-      end
-
-      if size == :pdf
-        args << "-background black"
-      end
-
       if extension == :jpg
-        args << "-background white"
-      end
-
-      if (size == :pdf) || (extension == :jpg)
-        args << "-flatten +matte"
+        args << "-background white -flatten +matte"
       end
 
       command = Subexec.run "convert #{@cleaned} #{args.join(' ')} #{path_for(size, extension)}"

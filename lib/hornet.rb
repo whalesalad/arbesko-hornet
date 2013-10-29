@@ -14,16 +14,14 @@ require 'hornet/image_processor'
 module Hornet
   NAME = "Hornet"
   
-  ALLOWED_TYPES = %w{single double}
-  ALLOWED_SLUGS = %w{small medium large pdf mask}
+  ALLOWED_SLUGS = %w{small medium large pdf}
   ALLOWED_EXTS = %w{jpg png}
 
   IMAGE_SIZES = {
     small: 150,
     medium: 250,
     large: 700,
-    pdf: 900,
-    mask: 900
+    pdf: 1000
   }
 
   BASE_DIR = File.expand_path(File.join(File.dirname(__FILE__), '../'))

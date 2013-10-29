@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$stdout.sync = true
+
 require 'dante'
 require_relative '../lib/hornet.rb'
 
