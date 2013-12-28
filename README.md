@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/repos/52bf5096e30ba04fc4005b45/badges/e336ceaeeea671e0a6f0/gpa.png)](https://codeclimate.com/repos/52bf5096e30ba04fc4005b45/feed)
+
 Hornet is a simple image-processing utility for the Arbesko.com website.
 
 The overall architecture consists of the following:
@@ -19,9 +21,9 @@ To avoid library conflicts and reduce the complexity of deployment and operation
 Assuming you have `docker` installed and running, the following commands will Hornet running pretty quickly. This is a real-world example, so it will need to be modified to your particular use-case.
 
     cd /var/www
-    
+
     git clone git@github.com:whalesalad/arbesko-hornet.git hornet && cd hornet
-    
+
 The command that actually runs the docker container is below:
 
     sudo docker run -v `pwd`:/hornet -v /home/arbesko/web-images:/images -w /hornet -d whalesalad/ruby-base /bin/bash -l -c "bundle install && rake && bundle exec bin/hornet --force -d /images"
@@ -30,7 +32,7 @@ Let's break this down piece-by-piece, we start with the baseline command for run
 
     sudo docker run
 
-The next bit will mount the current directory (indicated by `pwd`) as the `/hornet` directory *inside of the container*. This is required so that we have the application code inside of the image. Code *could* be packaged with the container, but i'm currently enjoy this flexibility. 
+The next bit will mount the current directory (indicated by `pwd`) as the `/hornet` directory *inside of the container*. This is required so that we have the application code inside of the image. Code *could* be packaged with the container, but i'm currently enjoy this flexibility.
 
     -v `pwd`:/hornet
 
@@ -48,17 +50,17 @@ Next comes the slug of the image that we're going to be use to spin-up the Docke
 
 Finally, we're able to pass the desired command that will run inside of this container. This runs bash with a login shell (to load our rbenv ENV dependencies), and `-c` lets us pass a command to run
 
-    /bin/bash -l -c 
+    /bin/bash -l -c
 
 The command that we are currently using is below:
 
     "bundle install && rake && bundle exec bin/hornet --force -d /images"
 
-This will run bundle install to get the latest gems, rake to run the default setup task in the `Rakefile` (bootstraps some needed work directories) and finally runs the `hornet` binary via bundle exec so that all the gems are available. 
+This will run bundle install to get the latest gems, rake to run the default setup task in the `Rakefile` (bootstraps some needed work directories) and finally runs the `hornet` binary via bundle exec so that all the gems are available.
 
 ### bin/hornet
 
 The hornet binary (located in `bin/hornet`) accepts two arguments:
 
 - `-d DIRECTORY` – which sets the directory of images to watch/process
-- `--force` – will start the hive and will force the re-processing of all the images contained. Useful for the first time you run the tool. 
+- `--force` – will start the hive and will force the re-processing of all the images contained. Useful for the first time you run the tool.
